@@ -1,8 +1,7 @@
 import { User } from '../persistent/models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
+import { JWT_SECRET, DEFAULT_ADMIN } from '../config';
 
 export class AuthService {
     static async register({ lastName, firstName, parentName, birthDate, email, password, role }: {
@@ -45,15 +44,6 @@ export class AuthService {
     }
 
     static async createDefaultAdmin() {
-        const DEFAULT_ADMIN = {
-            lastName: 'Admin',
-            firstName: 'Admin',
-            parentName: null,
-            birthDate: '1970-01-01',
-            email: 'admin@admin.com',
-            password: 'admin',
-            role: 'admin',
-        };
         const admin = await User.findOne({ where: { email: DEFAULT_ADMIN.email } });
         if (!admin) {
             const hashedPassword = await bcrypt.hash(DEFAULT_ADMIN.password, 10);

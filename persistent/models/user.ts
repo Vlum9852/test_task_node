@@ -52,6 +52,12 @@ export class User extends Model {
         defaultValue: 'user',
     })
     role!: 'admin' | 'user';
+    @Column({
+        type: DataType.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+    })
+    status!: boolean;
 }
 
 

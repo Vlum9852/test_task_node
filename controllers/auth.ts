@@ -17,7 +17,6 @@ router.post('/register', authorizeRole(['admin']), async (req: Request, res: Res
 
 router.post('/login', async (req: Request, res: Response) => {
     try {
-        console.log(req);
         const token = await AuthService.login(req.body);
         res.cookie('token', token, {
             httpOnly: true,
